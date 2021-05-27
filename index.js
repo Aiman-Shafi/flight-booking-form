@@ -1,6 +1,5 @@
-const firstClass = document.getElementById("first-class");
-const economyClass = document.getElementById("economy")
-
+const firstClass = document.getElementById("first-class")
+const economyClass = document.getElementById("economy-class")
 const addFirstClassPrice = document.getElementById("add-first-class-price")
 const decreaseFirstClassPrice = document.getElementById("decrease-first-class-price")
 
@@ -20,21 +19,35 @@ decreaseFirstClassPrice.addEventListener("click", () => TicketClassHandler(first
 addEconomyPrice.addEventListener("click", () => TicketClassHandler(economyClass, true))
 decreaseEconomyPrice.addEventListener("click", () => TicketClassHandler(economyClass, false))
 
-let ticketCount = 0
 
 // form ticket handler
 function TicketClassHandler(ticketClass, isIncrease) {
 
+    let ticketCount = parseInt(ticketClass.value)
     if (isIncrease == true) {
-        ticketCount++
+        ticketCount += 1
         ticketClass.value = ticketCount
     } else if (isIncrease == false && ticketCount > 0) {
-        ticketCount--
+        ticketCount -= 1
         ticketClass.value = ticketCount
     }
 
+    total()
+
+}
+
+function total(){
+
+    let ticketCountEconomy = economyClass.value
+    console.log(ticketCountEconomy)
+    ticketCountEconomy = parseInt(ticketCountEconomy)
+
+    let ticketCountFirst = firstClass.value
+    console.log(ticketCountFirst)
+    ticketCountFirst = parseInt(ticketCountFirst)
+
     // subtotal
-    let subTotalCost = (priceOfEconomyClass * ticketCount) + (priceOfFirstClass + ticketCount)
+    let subTotalCost = (150 * ticketCountFirst + 100 * ticketCountEconomy)
     subTotal.textContent = "$" + subTotalCost
 
     // tax
@@ -45,6 +58,5 @@ function TicketClassHandler(ticketClass, isIncrease) {
     //total
     let grandTotal = (parseFloat(subTotalCost) + parseFloat(tax))
     grandTotal = grandTotal.toFixed(2)
-    document.getElementById("grandTotal").innerText = "$" +grandTotal
-
+    document.getElementById("grandTotal").innerText = "$" + grandTotal
 }
